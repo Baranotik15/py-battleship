@@ -44,8 +44,7 @@ class Ship:
             if self.is_ship_sunk():
                 self.is_drowned = True
                 return "Sunk!"
-            else:
-                return "Hit!"
+            return "Hit!"
         return "Miss!"
 
     def is_ship_sunk(self) -> bool:
@@ -125,9 +124,8 @@ class Battleship:
             (1, -1),
             (1, 1)
         ]
-        for dr, dc in directions:
-            new_row, new_col = row + dr, column + dc
-            if (0 <= new_row < 10 and 0 <= new_col < 10
-                    and self.field[new_row][new_col] == "□"):
-                return True
-        return False
+
+        return any(
+            0 <= row + dr < 10 and 0 <= column + dc < 10 and self.field[row + dr][column + dc] == "□"
+            for dr, dc in directions
+        )
