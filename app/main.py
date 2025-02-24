@@ -67,12 +67,17 @@ class Battleship:
 
     def fire(self, location: Tuple[int, int]) -> str:
         row, column = location
+
         if 0 <= row < 10 and 0 <= column < 10:
             hit_result = "Miss!"
             for ship in self.ships:
                 hit_result = ship.fire(row, column)
                 if hit_result != "Miss!":
+                    self.field[row][column] = "x"
                     break
+            else:
+                self.field[row][column] = "O"
+
             return hit_result
         return "Invalid coordinates!"
 
@@ -126,6 +131,7 @@ class Battleship:
         ]
 
         return any(
-            0 <= row + dr < 10 and 0 <= column + dc < 10 and self.field[row + dr][column + dc] == "□"
+            0 <= row + dr < 10 and 0 <= column + dc < 10
+            and self.field[row + dr][column + dc] == "□"
             for dr, dc in directions
         )
